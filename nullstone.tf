@@ -18,7 +18,34 @@ resource "random_string" "resource_suffix" {
 }
 
 locals {
-  tags          = data.ns_workspace.this.tags
+  tags          = { for k, v in data.ns_workspace.this.tags : lower(k) => v }
   block_name    = data.ns_workspace.this.block_name
-  resource_name = "${data.ns_workspace.this.block_ref}-${random_string.resource_suffix.result}"
+  block_ref     = data.ns_workspace.this.block_ref
+  resource_name = "${local.block_ref}-${random_string.resource_suffix.result}"
+
+  match_labels = {
+    "nullstone.io/stack"     = data.ns_workspace.this.stack_name
+    "nullstone.io/block-ref" = data.ns_workspace.this.block_ref
+    "nullstone.io/env"       = data.ns_workspace.this.env_name
+  }
+  labels = merge({
+    // k8s-recommended labels
+    "app.kubernetes.io/name"       = local.block_name
+    "app.kubernetes.io/version"    = local.app_version
+    "app.kubernetes.io/component"  = ""
+    "app.kubernetes.io/part-of"    = data.ns_workspace.this.stack_name
+    "app.kubernetes.io/managed-by" = "nullstone"
+    // nullstone labels
+    "nullstone.io/block" = data.ns_workspace.this.block_name
+  }, local.match_labels)
+  app_labels = merge({
+    // k8s-recommended labels
+    "app.kubernetes.io/name"       = local.block_name
+    "app.kubernetes.io/version"    = local.app_version
+    "app.kubernetes.io/component"  = ""
+    "app.kubernetes.io/part-of"    = data.ns_workspace.this.stack_name
+    "app.kubernetes.io/managed-by" = "nullstone"
+    // nullstone labels
+    "nullstone.io/app" = data.ns_workspace.this.block_name
+  }, local.match_labels)
 }
