@@ -1,6 +1,6 @@
 org_name: nullstone
-name: gcp-gke-task
-friendly_name: GKE Task
+name: gcp-gke-job
+friendly_name: GKE Job
 description: Creates a Nullstone app that is runnable through a GKE cluster.
 category: app
 subcategory: container
