@@ -34,7 +34,7 @@ locals {
       valueFrom = {
         secretKeyRef = {
           name = "${local.resource_name}-gsm-secrets"
-          key  = env.value
+          key  = k
         }
       }
     }
