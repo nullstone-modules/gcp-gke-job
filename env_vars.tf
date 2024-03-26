@@ -38,9 +38,14 @@ data "ns_env_variables" "this" {
   input_secrets       = local.input_secrets
 }
 
+data "ns_secret_keys" "this" {
+  input_env_variables = var.env_vars
+  input_secret_keys   = nonsensitive(keys(local.input_secrets))
+}
+
 locals {
-  secret_keys          = data.ns_env_variables.this.secret_keys
-  all_secrets          = data.ns_env_variables.this.secrets
-  all_env_vars         = data.ns_env_variables.this.env_variables
+  secret_keys  = data.ns_secret_keys.this.secret_keys
+  all_secrets  = data.ns_env_variables.this.secrets
+  all_env_vars = data.ns_env_variables.this.env_variables
   existing_secret_refs = [for key, ref in data.ns_env_variables.this.secret_refs : { name = key, valueFrom = ref }]
 }
