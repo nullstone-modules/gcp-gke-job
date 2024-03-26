@@ -9,11 +9,10 @@ locals {
 locals {
   pod_volumes = [
     for name, v in local.volumes : {
-      name = name
-      volumeSource = {
-        persistentVolumeClaim = v.persistent_volume_claim
-        emptyDir              = v.empty_dir
-      }
+      name                  = name
+      persistentVolumeClaim = v.persistent_volume_claim
+      emptyDir              = v.empty_dir
+      hostPath              = v.host_path
     }
   ]
   pod_volume_mounts = [for name, vm in local.volume_mounts : {
