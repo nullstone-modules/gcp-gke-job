@@ -60,7 +60,7 @@ locals {
           containers = [
             {
               name         = local.main_container_name
-              image        = "${local.service_image}:${local.app_version}"
+              image        = "${local.repository_url}:${local.app_version}"
               args         = local.command
               env          = concat(local.pod_env_vars, local.pod_secrets)
               volumeMounts = local.pod_volume_mounts
