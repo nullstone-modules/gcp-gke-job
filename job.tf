@@ -1,4 +1,5 @@
 locals {
+  job_definition_name = "job-definition/${local.resource_name}"
   main_container_name = "main"
   command             = length(var.command) > 0 ? var.command : null
 }
@@ -73,6 +74,18 @@ locals {
       }
     }
   })
+}
+
+resource "kubernetes_config_map_v1" "job_definition" {
+  metadata {
+    namespace = local.kubernetes_namespace
+    name      = local.job_definition_name
+    labels    = local.app_labels
+  }
+
+  data = {
+    template = local.job_definition
+  }
 }
 
 // The following is used as reference to building a Kubernetes Job

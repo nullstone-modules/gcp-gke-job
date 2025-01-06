@@ -1,3 +1,6 @@
+# 0.0.8 (Unreleased)
+* Store job definition in Kubernetes config map.
+
 # 0.0.7 (Jan 04, 2025)
 * Added labels to pods that are created by Kubernetes Job.
 

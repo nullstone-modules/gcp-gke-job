@@ -45,7 +45,7 @@ output "main_container_name" {
   description = "string ||| The name of the container definition for the primary container"
 }
 
-output "job_definition" {
-  value       = local.job_definition
-  description = "string ||| A base64-encoded JSON string that provides a template for submitting a Job to Kubernetes."
+output "job_definition_name" {
+  value       = local.job_definition_name
+  description = "string ||| The name of the Kubernetes ConfigMap containing the Job template"
 }
