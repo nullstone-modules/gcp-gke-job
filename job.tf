@@ -1,5 +1,5 @@
 locals {
-  job_definition_name = "job-definition/${local.resource_name}"
+  job_definition_name = "${local.resource_name}-job-definition"
   main_container_name = "main"
   command             = length(var.command) > 0 ? var.command : null
 }
