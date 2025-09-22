@@ -39,7 +39,6 @@ output "deployer" {
   sensitive   = true
 }
 
-
 output "main_container_name" {
   value       = local.main_container_name
   description = "string ||| The name of the container definition for the primary container"
@@ -48,4 +47,14 @@ output "main_container_name" {
 output "job_definition_name" {
   value       = local.job_definition_name
   description = "string ||| The name of the Kubernetes ConfigMap containing the Job template"
+}
+
+output "private_urls" {
+  value       = local.private_urls
+  description = "list(string) ||| A list of URLs only accessible inside the network"
+}
+
+output "public_urls" {
+  value       = local.public_urls
+  description = "list(string) ||| A list of URLs accessible to the public"
 }
