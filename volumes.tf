@@ -7,6 +7,7 @@ locals {
       mount_propagation = lookup(vm, "mount_propagation", null)
       sub_path          = lookup(vm, "sub_path", null)
       read_only         = tobool(lookup(vm, "read_only", null))
+      sub_path_expr     = lookup(vm, "sub_path_expr", null)
     }
   }
 

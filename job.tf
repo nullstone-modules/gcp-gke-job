@@ -22,6 +22,7 @@ locals {
     subPath          = vm.sub_path
     mountPropagation = vm.mount_propagation
     readOnly         = vm.read_only
+    subPathExpr      = vm.sub_path_expr
   }]
   pod_env_vars = [
     for k, v in local.all_env_vars : {

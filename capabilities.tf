@@ -88,12 +88,27 @@ locals {
 
     volume_mounts = [
       {
-        cap_tf_id = "x"
+        cap_tf_id         = "x"
         name              = ""   // Required
         mount_path        = ""   // Required
         sub_path          = null // Path within the volume from which the container's volume should be mounted
         mount_propagation = null
         read_only         = null // Defaults to false
+      }
+    ]
+
+    cron_jobs = [
+      {
+        cap_tf_id                     = "x"
+        name                          = ""
+        labels                        = {}
+        schedule                      = ""
+        concurrency_policy            = ""        // Allow|Forbid|Replace
+        suspend                       = false     // Boolean
+        failed_jobs_history_limit     = 1         // Integer
+        successful_jobs_history_limit = 3         // Integer
+        timezone                      = "Etc/UTC" // String
+        starting_deadline_seconds     = 0         // Integer
       }
     ]
   }

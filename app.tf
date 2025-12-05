@@ -16,7 +16,7 @@ locals {
     service_account_id       = google_service_account.app.id
     service_account_email    = google_service_account.app.email
     service_name             = local.service_name
-    job_definition_namespace = kubernetes_config_map_v1.job_definition.metadata.namespace
-    job_definition_name      = kubernetes_config_map_v1.job_definition.metadata.name
+    job_definition_namespace = kubernetes_config_map_v1.job_definition.metadata[0].namespace
+    job_definition_name      = kubernetes_config_map_v1.job_definition.metadata[0].name
   })
 }

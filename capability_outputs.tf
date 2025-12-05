@@ -9,5 +9,6 @@ locals {
     "metrics",
     "volumes",
     "volume_mounts",
+    "cron_jobs",
   ]
 }
