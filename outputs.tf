@@ -4,7 +4,7 @@ output "image_repo_url" {
 }
 
 output "log_provider" {
-  value       = "gcp"
+  value       = "gke"
   description = "string ||| The log provider used for this service."
 }
 
