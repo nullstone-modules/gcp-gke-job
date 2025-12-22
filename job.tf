@@ -31,7 +31,7 @@ locals {
     }
   ]
   pod_secrets = [
-    for k in local.secret_keys : {
+    for k in local.all_secret_keys : {
       name = k
       valueFrom = {
         secretKeyRef = {

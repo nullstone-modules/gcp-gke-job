@@ -82,7 +82,7 @@ resource "kubernetes_cron_job_v1" "this" {
               }
 
               dynamic "env" {
-                for_each = toset(local.secret_keys)
+                for_each = toset(local.all_secret_keys)
 
                 content {
                   name = env.value
