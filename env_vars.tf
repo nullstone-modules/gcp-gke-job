@@ -35,8 +35,12 @@ locals {
     NULLSTONE_PUBLIC_HOSTS  = join(",", local.public_hosts)
     NULLSTONE_PRIVATE_HOSTS = join(",", local.private_hosts)
   })
+  google_env_vars = tomap({
+    GOOGLE_CLOUD_PROJECT        = local.project_id
+    GOOGLE_CLOUD_PROJECT_NUMBER = local.project_number
+  })
 
-  input_env_vars    = merge(local.standard_env_vars, local.cap_env_vars, var.env_vars)
+  input_env_vars    = merge(local.standard_env_vars, local.google_env_vars, local.cap_env_vars, var.env_vars)
   input_secrets     = merge(local.cap_secrets, var.secrets)
   input_secret_keys = nonsensitive(concat(keys(local.cap_secrets), keys(var.secrets)))
 }
@@ -60,5 +64,5 @@ locals {
   secret_keys          = data.ns_secret_keys.this.secret_keys
   all_secrets          = data.ns_env_variables.this.secrets
   all_env_vars         = data.ns_env_variables.this.env_variables
-  existing_secret_refs = [for key, ref in data.ns_env_variables.this.secret_refs : { name = key, valueFrom = ref }]
+  existing_secret_refs = data.ns_env_variables.this.secret_refs
 }
