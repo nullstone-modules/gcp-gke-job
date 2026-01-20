@@ -61,7 +61,7 @@ resource "kubernetes_cron_job_v1" "this" {
 
         template {
           metadata {
-
+            labels = local.app_labels
           }
           spec {
             restart_policy       = "Never"
