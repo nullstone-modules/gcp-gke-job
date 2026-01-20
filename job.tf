@@ -59,8 +59,9 @@ locals {
           labels    = local.app_labels
         }
         spec = {
-          restartPolicy = "Never"
-          volumes       = local.pod_volumes
+          restartPolicy      = "Never"
+          volumes            = local.pod_volumes
+          serviceAccountName = kubernetes_service_account_v1.app.metadata[0].name
 
           containers = [
             {
