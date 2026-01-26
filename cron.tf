@@ -14,6 +14,7 @@ locals {
       successful_jobs_history_limit = lookup(cj, "successful_jobs_history_limit", null)
       timezone                      = lookup(cj, "timezone", null)
       starting_deadline_seconds     = lookup(cj, "starting_deadline_seconds", null)
+      ttl_seconds_after_finished    = lookup(cj, "ttl_seconds_after_finished", null)
     }
   }
 }
@@ -55,9 +56,9 @@ resource "kubernetes_cron_job_v1" "this" {
         labels    = local.app_labels
       }
       spec {
-        completions                = 1            // we only want to run 1 job
-        backoff_limit              = 0            // do not retry jobs
-        ttl_seconds_after_finished = 24 * 60 * 60 // retain completed jobs for 1 day
+        completions                = 1                                     // we only want to run 1 job
+        backoff_limit              = 0                                     // do not retry jobs
+        ttl_seconds_after_finished = each.value.ttl_seconds_after_finished // retain completed jobs for 1 day
 
         template {
           metadata {
