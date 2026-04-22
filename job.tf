@@ -14,6 +14,7 @@ locals {
       persistentVolumeClaim = v.persistent_volume_claim
       emptyDir              = v.empty_dir
       hostPath              = v.host_path
+      secret                = v.secret
     }
   ]
   pod_volume_mounts = [for name, vm in local.volume_mounts : {

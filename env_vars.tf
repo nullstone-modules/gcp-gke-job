@@ -57,7 +57,7 @@ locals {
     OTEL_EXPORTER_OTLP_ENDPOINT = local.otel_collector_endpoint
     OTEL_EXPORTER_OTLP_PROTOCOL = local.otel_collector_protocol
     OTEL_SERVICE_NAME           = local.app_name
-    OTEL_RESOURCE_ATTRIBUTES    = join(",", [
+    OTEL_RESOURCE_ATTRIBUTES = join(",", [
       "service.namespace=${local.stack_name}",
       "deployment.environment=${local.env_name}",
       "service.version=${local.app_version}",
