@@ -2,6 +2,21 @@ locals {
   job_definition_name = "${local.resource_name}-job-definition"
   main_container_name = "main"
   command             = length(var.command) > 0 ? var.command : null
+
+  container_resources = merge(
+    {
+      requests = {
+        cpu    = var.cpu
+        memory = var.memory
+      }
+    },
+    (var.max_cpu != "" || var.max_memory != "") ? {
+      limits = merge(
+        var.max_cpu != "" ? { cpu = var.max_cpu } : {},
+        var.max_memory != "" ? { memory = var.max_memory } : {},
+      )
+    } : {},
+  )
 }
 
 // For GKE Tasks, we are going to create a job definition and emit via outputs
@@ -71,6 +86,7 @@ locals {
               args         = local.command
               env          = concat(local.pod_env_vars, local.pod_secrets)
               volumeMounts = local.pod_volume_mounts
+              resources    = local.container_resources
             }
           ]
         }

@@ -73,6 +73,18 @@ resource "kubernetes_cron_job_v1" "this" {
               image = "${local.repository_url}:${local.app_version}"
               args  = local.command
 
+              resources {
+                requests = {
+                  cpu    = var.cpu
+                  memory = var.memory
+                }
+
+                limits = merge(
+                  var.max_cpu != "" ? { cpu = var.max_cpu } : {},
+                  var.max_memory != "" ? { memory = var.max_memory } : {},
+                )
+              }
+
               dynamic "env" {
                 for_each = local.all_env_vars
 

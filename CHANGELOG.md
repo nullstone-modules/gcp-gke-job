@@ -1,3 +1,7 @@
+# 0.1.3 (May 1, 2026)
+* Wired up `var.cpu` and `var.memory`.
+* Added `var.max_cpu` and `var.max_memory`.
+
 # 0.1.2 (May 1, 2026)
 * Added `project_id` to outputs.
 
