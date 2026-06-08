@@ -1,3 +1,6 @@
+# 0.1.4 (Jun 08, 2026)
+* Added `GOOGLE_CLOUD_REGION` env var to app.
+
 # 0.1.3 (May 1, 2026)
 * Wired up `var.cpu` and `var.memory`.
 * Added `var.max_cpu` and `var.max_memory`.
