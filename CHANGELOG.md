@@ -1,4 +1,7 @@
-# 0.1.5 (Un 10, 2026)
+# 0.1.6 (Jun 10, 2026)
+* Fixed nullstone provider upgrade.
+
+# 0.1.5 (Jun 10, 2026)
 * Upgraded terraform providers.
 * Added support for env variables in cron jobs.
 
