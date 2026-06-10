@@ -1,3 +1,7 @@
+# 0.1.5 (Un 10, 2026)
+* Upgraded terraform providers.
+* Added support for env variables in cron jobs.
+
 # 0.1.4 (Jun 08, 2026)
 * Added `GOOGLE_CLOUD_REGION` env var to app.
 
