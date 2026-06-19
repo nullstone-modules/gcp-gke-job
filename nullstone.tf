@@ -23,44 +23,17 @@ locals {
   block_ref     = data.ns_workspace.this.block_ref
   resource_name = "${local.block_ref}-${random_string.resource_suffix.result}"
 
-  match_labels = {
-    "nullstone.io/stack"     = data.ns_workspace.this.stack_name
-    "nullstone.io/block-ref" = data.ns_workspace.this.block_ref
-    "nullstone.io/env"       = data.ns_workspace.this.env_name
-  }
-  k8s_component_labels = {
-    "nullstone.io/stack"     = data.ns_workspace.this.stack_name
-    "nullstone.io/block-ref" = data.ns_workspace.this.block_ref
-    "nullstone.io/app"       = data.ns_workspace.this.block_name
-    "nullstone.io/block"     = data.ns_workspace.this.block_name
-    "nullstone.io/env"       = data.ns_workspace.this.env_name
+  // Component-level labels: the workspace's default Kubernetes labels plus the app key.
+  k8s_component_labels = merge(data.ns_workspace.this.k8s_labels, {
+    "nullstone.io/app" = local.block_name
+  })
 
-    "app.kubernetes.io/name"       = local.block_name
-    "app.kubernetes.io/version"    = ""
-    "app.kubernetes.io/component"  = ""
-    "app.kubernetes.io/part-of"    = data.ns_workspace.this.stack_name
-    "app.kubernetes.io/managed-by" = "nullstone"
-  }
-  labels = merge({
-    // k8s-recommended labels
-    "app.kubernetes.io/name"       = local.block_name
-    "app.kubernetes.io/version"    = local.app_version
-    "app.kubernetes.io/component"  = ""
-    "app.kubernetes.io/part-of"    = data.ns_workspace.this.stack_name
-    "app.kubernetes.io/managed-by" = "nullstone"
-    // nullstone labels
-    "nullstone.io/block" = data.ns_workspace.this.block_name
-  }, local.match_labels)
-  app_labels = merge({
-    // k8s-recommended labels
-    "app.kubernetes.io/name"       = local.block_name
-    "app.kubernetes.io/version"    = local.app_version
-    "app.kubernetes.io/component"  = ""
-    "app.kubernetes.io/part-of"    = data.ns_workspace.this.stack_name
-    "app.kubernetes.io/managed-by" = "nullstone"
-    // nullstone labels
-    "nullstone.io/app" = data.ns_workspace.this.block_name
-  }, local.match_labels)
+  // App/pod labels: the workspace's default Kubernetes labels plus the running version and app key.
+  app_labels = merge(data.ns_workspace.this.k8s_labels, {
+    "app.kubernetes.io/version" = local.app_version
+    "nullstone.io/app"          = local.block_name
+  })
+
   repo_labels = {
     "nullstone-stack" = data.ns_workspace.this.stack_name
     "nullstone-block" = data.ns_workspace.this.block_name
