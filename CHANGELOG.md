@@ -3,6 +3,7 @@
 * Replaced `ns_env_variables` and `ns_secret_keys` with the layered `ns_env_layout`, `ns_env_values`, and `ns_env_platform_data` data sources to aggregate environment variables and secrets.
 * Emitted the `env` platform data record, including the source of each variable and the Kubernetes secret key of each managed secret.
 * Upgraded capability scaffolding to emit `capability` on capability outputs and `cap_prefixes`.
+* Artifact Registry repository now carries the workspace label set from `gcp_labels` (`stack`, `env`, `block`, `owner`, `project`, `application`, `component`, ...) so Nullstone cost attribution can see it. Existing repos are relabeled in place on the next apply; the old `nullstone-stack`, `nullstone-env`, and `nullstone-block` keys are removed.
 
 # 0.3.0 (Jul 25, 2026)
 * Added support for structured env var references: `{{ k8s.field(...) }}`, `{{ k8s.configMap(...) }}`, `{{ k8s.resourceField(...) }}`, and `{{ k8s.fileKey(...) }}`. Previously these were silently dropped — only plain values and `{{ secret(...) }}` were rendered. They are now emitted in both the job definition template (`nullstone exec`) and cron jobs. `fileKey` requires Kubernetes 1.34+ with the `EnvFiles` feature gate.
